@@ -1,10 +1,15 @@
 pipeline {
     agent any
-
+    
+    tools {
+        maven "maven-nodo-principal"
+    }
+    
     stages {
         stage('Build') {
             steps {
-                dir (‘maven-adderapp’) {
+                dir (‘jenkins/ejercicios/cicd/infra-ii
+’) {
                     sh 'mvn -DskipTests clean package'
                 }
             }
@@ -21,16 +26,4 @@ pipeline {
         }
     }
 
-    tools {
-        maven "maven-nodo-principal"
-    
-    }
-
-    post {
-        success {
-            dir (‘maven-adderapp’) {
-                archiveArtifacts artifacts: 'target/*.jar', fingerprint:true
-            }
-        }
-    }
 }
